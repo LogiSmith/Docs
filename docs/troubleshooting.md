@@ -60,9 +60,10 @@ set_property -dict { PACKAGE_PIN H17 IOSTANDARD LVCMOS33 } [get_ports {led[0]}]
 | Serial monitor won't open the port | port held by another process | Use `screen /dev/ttyUSB1 9600` (exit: `Ctrl+A` then `K`) |
 | Garbled UART output | baud mismatch / TX too fast | Use 9600 baud |
 
-!!! note "WSL2 — USB to the board"
-    On Windows the board's USB must be forwarded into WSL with usbipd-win, and the
-    FTDI kernel module loaded. See the [WSL2 install guide](installation/wsl.md).
+!!! note "WSL only"
+    **Applies only on WSL2 (Windows) — on native Linux you can ignore it.** The
+    board's USB must be forwarded into WSL with usbipd-win, and the FTDI kernel
+    module loaded. See the [WSL2 install guide](installation/wsl.md).
 
 ## Modules
 

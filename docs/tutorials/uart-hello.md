@@ -108,7 +108,8 @@ screen /dev/ttyUSB1 9600       # exit: Ctrl+A then K
 
 Press the reset button — `Hello World!` appears in the terminal. 🎉
 
-!!! note "On WSL"
+!!! note "WSL only"
+    **This applies only on WSL2 (Windows) — on native Linux you can ignore it.**
     The board's USB must be forwarded into WSL and the FTDI driver loaded for
     `/dev/ttyUSB1` to appear — see the [WSL2 guide](../installation/wsl.md) and
     [Troubleshooting](../troubleshooting.md#programming-serial).
