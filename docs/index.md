@@ -1,47 +1,48 @@
 # LogiSmith Docs
 
-User documentation for the **LogiSmith open-source FPGA toolchain** — an
-end-to-end, fully open-source flow for synthesizing, simulating and programming
-FPGAs, built for **teaching and learning** digital design without proprietary
-tools or licenses.
+**An end-to-end, fully open-source FPGA toolchain — built for teaching and
+learning digital design.** No proprietary tools, no licenses: synthesize,
+simulate and program FPGAs with an open flow (F4PGA = Yosys + VPR), driven by a
+small CLI called **Anvil**.
 
-At its core is **Anvil**, a small CLI that hides the raw F4PGA toolchain behind a
-few commands, plus a reusable RTL module system and a RISC-V SoC flow.
-
----
-
-## New here? Start here
-
-1. **[Install](installation/index.md)** the toolchain for your platform —
-   [Ubuntu](installation/ubuntu.md) · [WSL2](installation/wsl.md) · [Docker](installation/docker.md)
-   *(one command:* `curl -fsSL …/install.sh | bash`*)*
-2. **[Getting started](getting-started.md)** — from an empty folder to a bitstream
-   on the board.
-3. **[CLI reference](cli.md)** — every `anvil` command.
+```bash
+curl -fsSL https://raw.githubusercontent.com/LogiSmith/toolchain-setup/main/install.sh | bash
+```
 
 ---
 
-## What's here
+## Start here
 
-| Section | For |
-|---------|-----|
-| [Installation](installation/index.md) | Setting up the toolchain + dependencies |
-| [Getting started](getting-started.md) | Your first project, end to end |
-| [CLI reference](cli.md) | All `anvil` commands and what they do |
+1. **[Install](installation/index.md)** the toolchain — [Ubuntu](installation/ubuntu.md) · [WSL2](installation/wsl.md) · [Docker](installation/docker.md)
+2. **[Getting started](getting-started.md)** — from an empty folder to a bitstream on the board
+3. **[Blinky tutorial](tutorials/blinky.md)** — your first design, explained step by step
 
-## Beyond the basics
+---
 
-| Resource | What it is |
-|----------|-----------|
-| [Anvil developer docs](https://logismith.github.io/Anvil/) | Internals & reference: architecture, file formats (`config.json`, `module.json`, `soc.json`), the module system, contributing |
-| [Anvil source](https://github.com/LogiSmith/Anvil) | The CLI itself |
-| [toolchain-setup](https://github.com/LogiSmith/toolchain-setup) | The installer (`install.sh`) and pinned toolchain versions |
+## Documentation
+
+#### Installation
+[Overview](installation/index.md) · [Ubuntu](installation/ubuntu.md) · [WSL2](installation/wsl.md) · [Docker](installation/docker.md)
+— set up the toolchain and its dependencies.
+
+#### Learn
+[Getting started](getting-started.md) · [How it works](how-it-works.md) · [Tutorials](tutorials/index.md)
+— the build→program loop, the open FPGA flow explained, and a guided learning path.
+
+#### Reference
+[CLI reference](cli.md) · [Supported boards](supported-boards.md) · [Troubleshooting & FAQ](troubleshooting.md)
+— every command, the supported hardware, and fixes for common issues.
+
+#### Developer & source
+[Anvil developer docs](https://logismith.github.io/Anvil/) (internals & file formats) ·
+[Anvil repo](https://github.com/LogiSmith/Anvil) ·
+[toolchain-setup](https://github.com/LogiSmith/toolchain-setup) (the installer)
 
 ---
 
 ## Why open-source for teaching
 
-- **No licenses, no vendor lock-in** — students keep the toolchain after the course.
-- **Reproducible setup** — one command gives a whole lab the same working environment.
+- **No licenses, no lock-in** — students keep the toolchain after the course.
+- **Reproducible** — one command gives a whole lab the same working environment.
 - **Fast & modest hardware** — runs on a laptop, or on Windows via WSL2.
 - **Transparent** — every layer is inspectable, from RTL to bitstream.
