@@ -59,4 +59,5 @@ nav:
       - Docker: installation/docker.md
   - Getting started: getting-started.md
   - CLI reference: cli.md
+  - Troubleshooting & FAQ: troubleshooting.md
   - Anvil developer docs: https://logismith.github.io/Anvil/
