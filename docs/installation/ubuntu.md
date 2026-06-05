@@ -7,13 +7,74 @@ Setting up the full toolchain on native Ubuntu (bare-metal or VM). Tested on
     Use the [WSL2 guide](wsl.md) instead — it reuses these same steps and adds
     the Windows-side USB forwarding needed to program a board.
 
-Anvil expects tools at fixed locations (`~/miniconda3`, conda env `xc7`,
-`~/opt/f4pga`, `~/opt/sv2v/sv2v`). Keep the paths below as-is unless you also
-change them in `anvil.py`.
+There are two ways to install:
+
+- **[Automatic](#automatic-installation)** — one command, recommended for most people.
+- **[Manual](#manual-installation)** — step by step, if you want to understand or
+  customise each part.
+
+Both install the same tools at the fixed locations Anvil expects (`~/opt/anvil`,
+`~/opt/sv2v/sv2v`, `~/miniconda3` with the `xc7` env, `~/opt/f4pga`).
 
 ---
 
-## 1. Build dependencies
+## Automatic installation
+
+The [`toolchain-setup`](https://github.com/LogiSmith/toolchain-setup) script
+installs everything and runs an end-to-end build to verify it works.
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/LogiSmith/toolchain-setup/main/install.sh | bash
+```
+
+Prefer to read it before running (good practice for any `curl | bash`):
+
+```bash
+git clone https://github.com/LogiSmith/toolchain-setup.git
+cd toolchain-setup
+less install.sh        # review
+./install.sh
+```
+
+The script is **idempotent** — re-running it skips anything already installed.
+
+### Options
+
+| Flag | Effect |
+|------|--------|
+| `--minimal` | Skip optional tools (RISC-V toolchain + openFPGALoader/board) |
+| `--no-board` | Skip only openFPGALoader + udev (no board programming) |
+| `--no-test` | Skip the end-to-end build self-test |
+| `--skip-apt` | Skip the apt steps (deps already present) |
+| `-h`, `--help` | Show help |
+
+Example — minimal install without board tooling (e.g. a headless test box):
+
+```bash
+./install.sh --minimal
+```
+
+### After it finishes
+
+Open a new shell (or `source ~/.bashrc`) so the `anvil` alias and Conda are
+active, then confirm:
+
+```bash
+anvil doctor
+```
+
+That's it — skip the manual section below. It remains as a reference for what the
+script does and for troubleshooting.
+
+---
+
+## Manual installation
+
+Follow these if you prefer to install step by step, or to understand what the
+automatic script does. Keep the paths as-is unless you also change them in
+`anvil.py`.
+
+### 1. Build dependencies
 
 ```bash
 sudo apt-get update && sudo apt-get upgrade -y
@@ -29,7 +90,7 @@ Simulator + waveform viewer (needed for `anvil test`):
 sudo apt install -y iverilog gtkwave
 ```
 
-## 2. Anvil CLI
+### 2. Anvil CLI
 
 ```bash
 git clone https://github.com/LogiSmith/Anvil.git ~/opt/anvil
@@ -39,7 +100,7 @@ source ~/.bashrc
 anvil --help
 ```
 
-## 3. sv2v (SystemVerilog → Verilog)
+### 3. sv2v (SystemVerilog → Verilog)
 
 Anvil converts every `.sv` source with `sv2v`. Install the release binary to
 `~/opt/sv2v/sv2v`:
@@ -53,9 +114,9 @@ chmod +x ~/opt/sv2v/sv2v
 ~/opt/sv2v/sv2v --version
 ```
 
-## 4. F4PGA (synthesis & place/route)
+### 4. F4PGA (synthesis & place/route)
 
-### 4.1 Miniconda
+#### 4.1 Miniconda
 
 ```bash
 wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /tmp/miniconda.sh
@@ -64,7 +125,7 @@ source ~/miniconda3/etc/profile.d/conda.sh
 echo "source ~/miniconda3/etc/profile.d/conda.sh" >> ~/.bashrc
 ```
 
-### 4.2 Conda environment
+#### 4.2 Conda environment
 
 ```bash
 git clone https://github.com/chipsalliance/f4pga-examples ~/f4pga-examples
@@ -75,7 +136,7 @@ conda activate xc7
 
 > If `environment.yml` is not found, try `conda env create -f xc7/environment.yml`.
 
-### 4.3 Architecture definitions (Artix-7)
+#### 4.3 Architecture definitions (Artix-7)
 
 ```bash
 export F4PGA_INSTALL_DIR=~/opt/f4pga
@@ -90,7 +151,7 @@ wget -qO- https://storage.googleapis.com/symbiflow-arch-defs/artifacts/prod/foss
 wget -qO- https://storage.googleapis.com/symbiflow-arch-defs/artifacts/prod/foss-fpga-tools/symbiflow-arch-defs/continuous/install/${F4PGA_TIMESTAMP}/symbiflow-arch-defs-xc7a100t_test-${F4PGA_HASH}.tar.xz | tar -xJC $F4PGA_INSTALL_DIR/${FPGA_FAM}
 ```
 
-### 4.4 Carry-chain patch
+#### 4.4 Carry-chain patch
 
 Complex designs (e.g. a PicoRV32 SoC) hit a known assertion bug in F4PGA's
 carry-chain fixer. Apply this one-time patch:
@@ -103,7 +164,7 @@ sed -i 's/assert list_of_cells\[0\] is None, (bit, list_of_cells\[0\], cellname)
 It relaxes an overly strict assertion that fails on multi-driver nets; the tool
 continues correctly afterwards.
 
-## 5. RISC-V toolchain *(optional — SoC firmware)*
+### 5. RISC-V toolchain *(optional — SoC firmware)*
 
 Needed only for `anvil compile` (SoC projects with C/C++ firmware):
 
@@ -111,7 +172,7 @@ Needed only for `anvil compile` (SoC projects with C/C++ firmware):
 sudo apt install -y gcc-riscv64-unknown-elf
 ```
 
-## 6. openFPGALoader *(optional — programming a board)*
+### 6. openFPGALoader *(optional — programming a board)*
 
 > The apt/conda version is too old — build from source.
 
@@ -131,7 +192,7 @@ sudo usermod -aG plugdev $USER
 sudo udevadm control --reload-rules && sudo udevadm trigger
 ```
 
-## Verify
+### Verify
 
 ```bash
 anvil doctor
