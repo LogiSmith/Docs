@@ -1,7 +1,7 @@
 # LogiSmith Docs
 
-**An end-to-end, fully open-source FPGA toolchain — built for teaching and
-learning digital design.** No proprietary tools, no licenses: synthesize,
+**An end-to-end, fully open-source FPGA toolchain** 
+No proprietary tools, no licenses: synthesize,
 simulate and program FPGAs with an open flow (F4PGA = Yosys + VPR), driven by a
 small CLI called **Anvil**.
 
@@ -21,19 +21,19 @@ curl -fsSL https://raw.githubusercontent.com/LogiSmith/toolchain-setup/main/inst
 
 ## Documentation
 
-#### Installation
+**:material-download: Installation**
 [Overview](installation/index.md) · [Ubuntu](installation/ubuntu.md) · [WSL2](installation/wsl.md) · [Docker](installation/docker.md)
 — set up the toolchain and its dependencies.
 
-#### Learn
+**:material: Learn**
 [Getting started](getting-started.md) · [How it works](how-it-works.md) · [Tutorials](tutorials/index.md)
 — the build→program loop, the open FPGA flow explained, and a guided learning path.
 
-#### Reference
+**:material-book-open-variant: Reference**
 [CLI reference](cli.md) · [Supported boards](supported-boards.md) · [Troubleshooting & FAQ](troubleshooting.md)
 — every command, the supported hardware, and fixes for common issues.
 
-#### Developer & source
+**:material-code-tags: Developer & source**
 [Anvil developer docs](https://logismith.github.io/Anvil/) (internals & file formats) ·
 [Anvil repo](https://github.com/LogiSmith/Anvil) ·
 [toolchain-setup](https://github.com/LogiSmith/toolchain-setup) (the installer)
