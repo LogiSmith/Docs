@@ -2,7 +2,7 @@ site_name: LogiSmith Docs
 site_description: Installation and user guides for the LogiSmith open-source FPGA toolchain
 site_author: LogiSmith
 site_url: https://logismith.github.io/Docs/
-copyright: "© 2025 LogiSmith — MIT License"
+copyright: "© 2026 LogiSmith — MIT License"
 
 repo_url: https://github.com/LogiSmith/Docs
 repo_name: LogiSmith/Docs
