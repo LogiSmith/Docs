@@ -58,6 +58,7 @@ nav:
       - WSL2: installation/wsl.md
       - Docker: installation/docker.md
   - Getting started: getting-started.md
+  - How it works: how-it-works.md
   - CLI reference: cli.md
   - Troubleshooting & FAQ: troubleshooting.md
   - Anvil developer docs: https://logismith.github.io/Anvil/
