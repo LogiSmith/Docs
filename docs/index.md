@@ -5,11 +5,6 @@ No proprietary tools, no licenses: synthesize,
 simulate and program FPGAs with an open flow (F4PGA = Yosys + VPR), driven by a
 small CLI called **Anvil**.
 
-```bash
-curl -fsSL https://raw.githubusercontent.com/LogiSmith/toolchain-setup/main/install.sh | bash
-```
-
----
 
 ## Start here
 
@@ -25,7 +20,7 @@ curl -fsSL https://raw.githubusercontent.com/LogiSmith/toolchain-setup/main/inst
 [Overview](installation/index.md) · [Ubuntu](installation/ubuntu.md) · [WSL2](installation/wsl.md) · [Docker](installation/docker.md)
 — set up the toolchain and its dependencies.
 
-**:material: Learn**
+**:material-school: Learn**
 [Getting started](getting-started.md) · [How it works](how-it-works.md) · [Tutorials](tutorials/index.md)
 — the build→program loop, the open FPGA flow explained, and a guided learning path.
 
