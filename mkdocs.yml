@@ -57,3 +57,6 @@ nav:
       - Ubuntu (native): installation/ubuntu.md
       - WSL2: installation/wsl.md
       - Docker: installation/docker.md
+  - Getting started: getting-started.md
+  - CLI reference: cli.md
+  - Anvil developer docs: https://logismith.github.io/Anvil/
