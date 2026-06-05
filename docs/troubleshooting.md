@@ -94,3 +94,16 @@ Yes, under WSL2 — see the [WSL2 guide](installation/wsl.md).
 
 **Can I use SystemVerilog?**
 Yes — `.sv` sources are converted automatically (via sv2v).
+
+**How do I load firmware/memory contents? In Vivado I used a `.coe` / `$readmemh`.**
+You don't point at an external hex file. `anvil compile` runs `programator.py`,
+which **bakes the firmware directly into a generated `build/firmware/ram.v`** — the
+memory contents become explicit `initial` assignments (`mem[i] = 32'h…;`) that get
+synthesized into the bitstream. No `.coe`, no Block Memory Generator IP, no
+`$readmemh` from a path. (Don't hand-edit `ram.v` — it's regenerated.)
+
+*Why:* the `.coe` / Block-Memory-Generator init flow is **Vivado-specific** and
+doesn't exist in F4PGA, and `$readmemh` from an external file is unreliable under
+Yosys synthesis (path resolution + BRAM inference). Emitting self-contained
+Verilog with inline `initial` values is portable, synthesizes into initialized
+BRAM reliably, and behaves identically in simulation and on hardware.
