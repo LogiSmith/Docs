@@ -28,5 +28,6 @@ external CLI tools it invokes.
 | RISC-V toolchain | SoC firmware (`anvil compile`) | optional |
 | usbipd-win | forwarding USB to WSL (Windows host only) | WSL only |
 
-!!! note "Stub"
-    Skeleton — the per-platform guides below are still to be filled in.
+!!! note "Status"
+    The [Ubuntu](ubuntu.md) guide is complete. [WSL2](wsl.md) and
+    [Docker](docker.md) are still skeletons.
