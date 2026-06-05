@@ -7,16 +7,15 @@ complete design you build and run on the board.
 |---|----------|----------------|
 | 1 | **[Blinky](blinky.md)** | The build → program loop, a clock, a counter, an output pin |
 | 2 | **[Switches & LEDs](switches-leds.md)** | Inputs and combinational logic |
-| 3 | UART hello *(soon)* | Reusing **modules**, clocked protocols, serial output |
+| 3 | **[UART hello](uart-hello.md)** | Reusing **modules**, clocked protocols, serial output |
 | 4 | RISC-V SoC *(soon)* | A CPU + firmware: hardware/software co-design |
 
-!!! note "Rungs 3–4"
-    Full write-ups are coming. In the meantime each already ships as a runnable
-    example — try them now:
+!!! note "Rung 4"
+    The full write-up is coming. In the meantime it already ships as a runnable
+    example — try it now:
 
     ```bash
-    anvil examples --board Nexys-A7-100T
-    anvil init --board Nexys-A7-100T --example uart-hello   # or hello-PicoRV
+    anvil init --board Nexys-A7-100T --example hello-PicoRV
     anvil build && anvil program
     ```
 

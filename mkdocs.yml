@@ -67,6 +67,7 @@ nav:
           - Overview: tutorials/index.md
           - 1 · Blinky: tutorials/blinky.md
           - 2 · Switches & LEDs: tutorials/switches-leds.md
+          - 3 · UART hello: tutorials/uart-hello.md
   - Reference:
       - CLI reference: cli.md
       - Supported boards: supported-boards.md
