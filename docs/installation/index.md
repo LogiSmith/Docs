@@ -13,6 +13,25 @@ After installing, verify everything from one command:
 anvil doctor
 ```
 
+## Updating
+
+Update the **whole toolchain** (Anvil + dependencies) to the latest tested set:
+
+```bash
+anvil update
+```
+
+This re-runs the [installer](https://github.com/LogiSmith/toolchain-setup), which
+is idempotent: it moves Anvil to its latest published release and picks up any
+bumped dependency versions. The long integration build is skipped by default
+(`anvil doctor` still runs); pass flags through, e.g. `anvil update --minimal`.
+
+## Checking your version
+
+```bash
+anvil version        # e.g. "anvil 1.0.0 (ff70179)"
+```
+
 ## Dependencies at a glance
 
 Anvil itself is pure-Python (standard library only) — the "dependencies" are the
