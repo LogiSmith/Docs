@@ -40,9 +40,7 @@ small CLI called **Anvil**.
 
 ---
 
-## Why open-source for teaching
+## Why open-source
 
-- **No licenses, no lock-in** — students keep the toolchain after the course.
-- **Reproducible** — one command gives a whole lab the same working environment.
-- **Fast & modest hardware** — runs on a laptop, or on Windows via WSL2.
+- **No licenses, no lock-in** — free to use, modify and share; nothing to expire.
 - **Transparent** — every layer is inspectable, from RTL to bitstream.
