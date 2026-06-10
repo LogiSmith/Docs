@@ -54,6 +54,19 @@ Example — minimal install without board tooling (e.g. a headless test box):
 ./install.sh --minimal
 ```
 
+### How to know it worked
+
+The installer is **fail-fast**: it stops at the first step that fails. So the
+sign of success is the green banner at the very end:
+
+```
+✓ Toolchain installed and all tests passed
+```
+
+If you see that, everything installed and the end-to-end test passed. If instead
+you see a red `✗ Install failed during step: …`, it tells you which step failed
+and how to fix it — fix that and re-run (the installer is idempotent).
+
 ### After it finishes
 
 Open a new shell (or `source ~/.bashrc`) so the `anvil` alias and Conda are
