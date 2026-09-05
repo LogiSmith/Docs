@@ -4,7 +4,8 @@ Setting up the full toolchain on native Ubuntu (bare-metal or VM). Tested on
 **Ubuntu 22.04 LTS** (x86_64).
 
 !!! tip "On Windows?"
-    Use the [WSL2 guide](wsl.md) instead — it reuses these same steps and adds
+    Use the [WSL2 guide](wsl.md) instead. A helper script sets up the WSL distro
+    (kernel modules included) and then runs this same installer inside it, plus
     the Windows-side USB forwarding needed to program a board.
 
 There are two ways to install:

@@ -4,7 +4,7 @@ How to install Anvil and the external tools it drives. Pick the guide for your
 platform:
 
 - [Ubuntu (native)](ubuntu.md) — bare-metal or VM Linux
-- [WSL2](wsl.md) — Windows + Ubuntu under WSL2 (adds USB forwarding)
+- [WSL2](wsl.md) — Windows; one helper script sets up the distro, then installs (adds USB forwarding)
 - [Docker](docker.md) — containerised toolchain
 
 After installing, verify everything from one command:
@@ -48,5 +48,5 @@ external CLI tools it invokes.
 | usbipd-win | forwarding USB to WSL (Windows host only) | WSL only |
 
 !!! note "Status"
-    The [Ubuntu](ubuntu.md) guide is complete. [WSL2](wsl.md) and
-    [Docker](docker.md) are still skeletons.
+    The [Ubuntu](ubuntu.md) and [WSL2](wsl.md) guides are complete.
+    [Docker](docker.md) is still a skeleton.
