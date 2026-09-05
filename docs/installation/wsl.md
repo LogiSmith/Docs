@@ -311,22 +311,66 @@ A bitstream under `build/<target>/top.bit` means the toolchain works.
 
 ## Troubleshooting
 
-**"Required kernel modules not found"** — the running kernel has no `vhci-hcd` /
-`ftdi_sio`. Note that `wsl --version` reports the kernel WSL *ships*, while a
-running WSL keeps the kernel it booted with until every distro stops. So run
-`wsl --shutdown` first and try again; if it persists, `wsl --update`.
+Click an entry to expand it.
 
-**"detected custom (non-Microsoft) kernel"** — there is a `kernel=` line in
-`%USERPROFILE%\.wslconfig`. That is allowed, but a hand-built kernel only works
-where its modules are installed. Comment the line out and run `wsl --shutdown` to
-return to the stock kernel.
+??? failure "`[ERROR] Required kernel modules not found`"
 
-**The distro starts as `root`** — the Linux installer refuses to run as root. WSL's
-default user is a setting separate from the account, so set it explicitly:
+    The running kernel has no `vhci-hcd` / `ftdi_sio`, so the board cannot be
+    attached to WSL.
 
-```powershell
-wsl --manage anvil --set-default-user <username>
-```
+    Careful with versions here: `wsl --version` reports the kernel WSL *ships*,
+    but a running WSL keeps whatever kernel it booted with until **every** distro
+    stops. The two can disagree.
 
-**`anvil` not found after installing** — open a new shell, or run
-`source ~/.bashrc`, so the alias and Conda are active.
+    ```powershell
+    wsl --shutdown          # boot onto the shipped kernel, then re-run
+    wsl --update            # if it still fails (Administrator)
+    ```
+
+    The message also tells you whether `/lib/modules/<running kernel>` exists in
+    the distro. If it says `MISSING`, the kernel and the distro's modules do not
+    match — see the next entry.
+
+??? warning "`[warn] detected custom (non-Microsoft) kernel`"
+
+    There is an active `kernel=` line in `%USERPROFILE%\.wslconfig`.
+
+    A custom kernel is allowed, but it only works where its modules are
+    installed — a distro created later will not have them. To go back to the
+    stock kernel, comment the line out and restart the VM:
+
+    ```powershell
+    notepad "$env:USERPROFILE\.wslconfig"    # put # in front of the kernel= line
+    wsl --shutdown
+    ```
+
+??? failure "The distro starts as `root`"
+
+    The Linux installer refuses to run as root. WSL's default user is a setting
+    separate from the account itself, so a distro can hold a perfectly good
+    account and still start as root.
+
+    ```powershell
+    wsl --manage anvil --set-default-user <username>
+    ```
+
+??? failure "`anvil: command not found` after installing"
+
+    The `anvil` alias and Conda are set up in `~/.bashrc`, which an already-open
+    shell has not read.
+
+    ```bash
+    source ~/.bashrc        # or just open a new shell
+    ```
+
+??? question "Can I start over?"
+
+    Yes — the distro is disposable and nothing outside it is touched. This
+    permanently deletes it and everything inside:
+
+    ```powershell
+    wsl --unregister anvil
+    ```
+
+    Then run Step 1 again. To keep the old one instead, install alongside it with
+    a different name: `-Name anvil2`.
