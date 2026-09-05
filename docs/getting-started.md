@@ -88,4 +88,6 @@ anvil program
 
 !!! tip "Serial output"
     Designs that use UART expose it over USB (e.g. `/dev/ttyUSB1`). View it with
-    `screen /dev/ttyUSB1 9600` (exit: `Ctrl+A` then `K`).
+    `sudo screen /dev/ttyUSB1 9600` (exit: `Ctrl+A` then `K`). The `sudo` is
+    needed because `/dev/ttyUSB*` is root-owned unless your user is in the
+    `dialout` group.

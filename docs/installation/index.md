@@ -5,7 +5,7 @@ platform:
 
 - [Ubuntu (native)](ubuntu.md) — bare-metal or VM Linux
 - [WSL2](wsl.md) — Windows; one helper script sets up the distro, then installs (adds USB forwarding)
-- [Docker](docker.md) — containerised toolchain
+- [Docker](docker.md) — **not available yet** (no image exists)
 
 After installing, verify everything from one command:
 
@@ -48,5 +48,5 @@ external CLI tools it invokes.
 | usbipd-win | forwarding USB to WSL (Windows host only) | WSL only |
 
 !!! note "Status"
-    The [Ubuntu](ubuntu.md) and [WSL2](wsl.md) guides are complete.
-    [Docker](docker.md) is still a skeleton.
+    The [Ubuntu](ubuntu.md) and [WSL2](wsl.md) guides are complete and tested.
+    There is **no Docker image yet** — see [Docker](docker.md) for why.

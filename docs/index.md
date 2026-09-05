@@ -8,7 +8,7 @@ small CLI called **Anvil**.
 
 ## Start here
 
-1. **[Install](installation/index.md)** the toolchain — [Ubuntu](installation/ubuntu.md) · [WSL2](installation/wsl.md) · [Docker](installation/docker.md)
+1. **[Install](installation/index.md)** the toolchain — [Ubuntu](installation/ubuntu.md) · [WSL2](installation/wsl.md)
 2. **[Getting started](getting-started.md)** — from an empty folder to a bitstream on the board
 3. **[Blinky tutorial](tutorials/blinky.md)** — your first design, explained step by step
 
@@ -22,7 +22,7 @@ small CLI called **Anvil**.
 ## Documentation
 
 **:material-download: Installation**
-[Overview](installation/index.md) · [Ubuntu](installation/ubuntu.md) · [WSL2](installation/wsl.md) · [Docker](installation/docker.md)
+[Overview](installation/index.md) · [Ubuntu](installation/ubuntu.md) · [WSL2](installation/wsl.md) · [Docker](installation/docker.md) *(not available yet)*
 — set up the toolchain and its dependencies.
 
 **:material-school: Learn**

@@ -103,7 +103,7 @@ set_property PACKAGE_PIN C12 [get_ports {cpu_resetn}]   # reset button
 ```bash
 anvil build
 anvil program
-screen /dev/ttyUSB1 9600       # exit: Ctrl+A then K
+sudo screen /dev/ttyUSB1 9600       # exit: Ctrl+A then K
 ```
 
 Press the reset button — `Hello World!` appears in the terminal. 🎉

@@ -57,7 +57,8 @@ set_property -dict { PACKAGE_PIN H17 IOSTANDARD LVCMOS33 } [get_ports {led[0]}]
 |---------|-------|-----|
 | `Error: no device found` | board off or USB not attached | Power the board on; on WSL attach USB with usbipd |
 | `/dev/ttyUSB*` missing | FTDI driver not loaded | `sudo modprobe ftdi_sio` |
-| Serial monitor won't open the port | port held by another process | Use `screen /dev/ttyUSB1 9600` (exit: `Ctrl+A` then `K`) |
+| Serial monitor won't open the port | port held by another process | Use `sudo screen /dev/ttyUSB1 9600` (exit: `Ctrl+A` then `K`) |
+| `screen` exits immediately / permission denied | `/dev/ttyUSB*` is root-owned | Run it with `sudo`, or add yourself to `dialout`: `sudo usermod -aG dialout $USER` |
 | Garbled UART output | baud mismatch / TX too fast | Use 9600 baud |
 
 !!! note "WSL only"

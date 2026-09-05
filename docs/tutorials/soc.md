@@ -85,7 +85,7 @@ So the program ships *inside* the bitstream — no separate flashing of code.
 
 ```bash
 anvil program
-screen /dev/ttyUSB1 9600      # exit: Ctrl+A then K
+sudo screen /dev/ttyUSB1 9600      # exit: Ctrl+A then K
 ```
 
 Press reset — the CPU boots and prints **`Hello from PicoRV32!`**. A RISC-V
