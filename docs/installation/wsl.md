@@ -40,42 +40,116 @@ Virtualization (VT-x / AMD-V) must be enabled in the BIOS/UEFI.
 
 ## Automatic installation
 
-The [`toolchain-setup`](https://github.com/LogiSmith/toolchain-setup) helper
-prepares the WSL side and then runs the Linux installer inside the new distro.
-From a **normal (non-Administrator)** PowerShell:
+Four steps. Run them in order from a **normal (non-Administrator)** PowerShell.
+
+### Step 1 — Run the installer
 
 ```powershell
 irm https://raw.githubusercontent.com/LogiSmith/toolchain-setup/main/wsl-setup.ps1 -OutFile "$env:TEMP\wsl-setup.ps1"; powershell -ExecutionPolicy Bypass -File "$env:TEMP\wsl-setup.ps1"
 ```
 
-!!! note "Why not `irm ... | iex`?"
-    Piping a script straight into `iex` is the usual Windows one-liner, but this
-    one is interactive: `exit` inside `iex` ends the **whole PowerShell session**,
-    so a failed check would close your window along with the message explaining
-    how to fix it. Saving the file first keeps the output on screen — and lets you
-    pass [options](#options).
+It first checks the Windows side (see [What it checks](#what-it-checks)), then
+creates a WSL distro called **`anvil`** and downloads Ubuntu into it — a few
+hundred MB, so give it a minute.
 
-Prefer to read it before running (good practice for any remote script):
+!!! failure "If it stops with a red `[ERROR]`"
+    The message names the check that failed and how to fix it. By far the most
+    common one is an outdated WSL, fixed from an **Administrator** PowerShell:
 
-```powershell
-git clone https://github.com/LogiSmith/toolchain-setup.git
-cd toolchain-setup
-notepad .\wsl-setup.ps1        # review
-.\wsl-setup.ps1
+    ```powershell
+    wsl --update
+    wsl --shutdown
+    ```
+
+    Then run Step 1 again. If `irm` itself cannot download (proxy or TLS issues),
+    fetch `wsl-setup.ps1` from
+    [GitHub](https://github.com/LogiSmith/toolchain-setup) by hand and run
+    `powershell -ExecutionPolicy Bypass -File .\wsl-setup.ps1`.
+
+### Step 2 — Choose a username and password
+
+WSL asks for these itself, and waits for you:
+
+```
+  Now create your Linux user account.
+  WSL asks for the username and password itself; this script neither sets
+  nor reads them. It continues on its own when you are done.
+
+Provisioning the new WSL instance anvil
+This might take a while...
+Create a default Unix user account: geek
+New password:
+Retype new password:
+passwd: password updated successfully
 ```
 
-If PowerShell refuses to run it (execution policy):
+Pick anything for the username — this is your Linux account, unrelated to your
+Windows login. **Remember the password: you need it in Step 3.** Nothing is echoed
+while you type it, which is normal.
 
-```powershell
-powershell -ExecutionPolicy Bypass -File .\wsl-setup.ps1
+Once it says `password updated successfully`, the script carries on by itself —
+there is no window to close and nothing to type.
+
+### Step 3 — Enter that password again when `sudo` asks
+
+The toolchain install starts automatically after a five-second countdown:
+
+```
+WSL distro 'anvil' is ready. (user: geek, kernel: 6.18.33.2)
+  starting the Anvil toolchain install in 5 ...
 ```
 
-It is safe to re-run: an existing distro is reused, never overwritten, and the
-Linux installer it calls is idempotent.
+It installs system packages, so `sudo` asks for **the same password you just
+created** — and may ask again if the install runs long:
 
-### What it checks first
+```
+[sudo] password for geek:
+```
 
-Before creating anything, it verifies the Windows side and stops with an
+!!! info "Your password is never stored"
+    Both prompts come from WSL and `sudo`, not from the installer. The scripts
+    never read your password, never write it to a file, and never send it
+    anywhere. Nothing is kept beyond the normal `sudo` timeout inside the distro.
+
+### Step 4 — Wait for the finish message
+
+This part takes **20–40 minutes** (Conda environment, F4PGA architecture
+definitions, Verilator build). You are done when you see both of these:
+
+```
+✓ Toolchain installed and all tests passed
+```
+
+```
+OK — toolchain installed in WSL distro 'anvil'.
+
+  Enter it with:            wsl -d anvil
+  Make it your default:     wsl --set-default anvil
+  Attach the board first:   usbipd list  ->  usbipd attach --wsl --busid <BUSID>
+  Then, inside WSL:         anvil doctor
+```
+
+The first line is the Linux installer confirming its own end-to-end test passed;
+the second is the helper's summary. Anything else — in particular a red
+`[ERROR]` or `✗ Install failed during step: …` — means it did not finish; the
+message says which step and what to do. Fix that and run Step 1 again, it is safe
+to re-run.
+
+### After it finishes
+
+```powershell
+wsl -d anvil
+```
+
+and inside the distro:
+
+```bash
+anvil doctor
+```
+
+### What it checks
+
+Before creating anything, Step 1 verifies the Windows side and stops with an
 explanation if something is missing:
 
 ```
@@ -100,52 +174,8 @@ explanation if something is missing:
 | Free disk | Conda + F4PGA architecture definitions + Verilator need room |
 | usbipd-win | required later to attach the board |
 
-An outdated WSL stops the run right here, with the `wsl --update` instructions —
-rather than failing an hour into the install.
-
-### Creating the distro
-
-It creates a distro named **`anvil`** (use `-Name` for something else). If that
-name already exists you are asked whether to reuse it or pick another one —
-nothing is ever deleted.
-
-WSL then asks for the Linux username and password itself:
-
-```
-==> 4. WSL distro 'anvil'
-  creating 'anvil' from image 'Ubuntu-24.04' (this downloads a few hundred MB) ...
-Downloading: Ubuntu 24.04 LTS
-Installing: Ubuntu 24.04 LTS
-Distribution successfully installed. It can be launched via 'wsl.exe -d anvil'
-  [ok] created 'anvil'
-
-  Now create your Linux user account.
-  WSL asks for the username and password itself; this script neither sets
-  nor reads them. It continues on its own when you are done.
-
-Provisioning the new WSL instance anvil
-This might take a while...
-Create a default Unix user account: geek
-New password:
-Retype new password:
-passwd: password updated successfully
-```
-
-Pick any username you like — it is your Linux account, unrelated to your Windows
-login. Once the password is set the script carries on by itself; there is nothing
-to close.
-
-!!! info "About the password prompts"
-    You are asked for a password **more than once**, by two different programs:
-
-    1. **WSL**, when creating the account above (`New password` / `Retype`).
-    2. **`sudo`**, once the Linux installer starts — it needs root to install
-       packages, and can ask again if the install runs long.
-
-    Neither prompt comes from the installer itself, and **nothing stores your
-    password**. It goes straight into WSL and `sudo`; the scripts never read it,
-    never write it to a file, and never send it anywhere. Nothing is kept beyond
-    the normal `sudo` timeout inside that distro.
+If the distro name `anvil` is already taken you are asked whether to reuse it or
+pick another one — nothing is ever deleted, and the whole script is safe to re-run.
 
 ### Options
 
@@ -165,56 +195,23 @@ powershell -ExecutionPolicy Bypass -File "$env:TEMP\wsl-setup.ps1" -Name my-dist
 | `-AllowOlder` | Accept a WSL/kernel older than the tested versions |
 | `-InstallArgs '<flags>'` | Passed through to the Linux installer, e.g. `'--no-test'` |
 
-### How to know it worked
-
-The helper is **fail-fast**: it stops at the first check that fails, before
-changing anything further. Two green markers tell you it went through.
-
-First, the WSL side is ready and the toolchain install starts:
-
-```
-WSL distro 'anvil' is ready. (user: geek, kernel: 6.18.33.2)
-  starting the Anvil toolchain install in 5 ...
-```
-
-Then the Linux installer runs — 20–40 minutes for the Conda environment, F4PGA
-architecture definitions and the Verilator build — and ends with its own banner:
-
-```
-✓ Toolchain installed and all tests passed
-```
-
-followed by the helper's closing summary:
-
-```
-OK — toolchain installed in WSL distro 'anvil'.
-
-  Enter it with:            wsl -d anvil
-  Make it your default:     wsl --set-default anvil
-  Attach the board first:   usbipd list  ->  usbipd attach --wsl --busid <BUSID>
-  Then, inside WSL:         anvil doctor
-```
-
-If you see those, you are done. A red `[ERROR]` line instead always names the step
-that failed and what to do about it — fix that and re-run.
-
-### After it finishes
-
-```powershell
-wsl -d anvil
-```
-
-and inside the distro:
-
-```bash
-anvil doctor
-```
-
 ---
 
 ## Manual setup
 
-If you would rather do the Windows side yourself.
+If you would rather read the helper before running it, or do the Windows side by
+hand.
+
+```powershell
+git clone https://github.com/LogiSmith/toolchain-setup.git
+cd toolchain-setup
+notepad .\wsl-setup.ps1        # review it, then run it if you like
+.\wsl-setup.ps1
+```
+
+The rest of this section is what that script does, step by step, if you prefer to
+do it yourself.
+
 
 ### 1. WSL2 + Ubuntu
 
