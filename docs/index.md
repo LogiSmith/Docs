@@ -1,4 +1,4 @@
-# LogiSmith Docs
+# Anvil Docs
 
 **An end-to-end, fully open-source FPGA toolchain** 
 No proprietary tools, no licenses: synthesize,
@@ -34,7 +34,7 @@ small CLI called **Anvil**.
 — every command, the supported hardware, and fixes for common issues.
 
 **:material-code-tags: Developer & source**
-[Anvil developer docs](https://logismith.github.io/Anvil/) (internals & file formats) ·
+[Anvil internals](https://logismith.github.io/Anvil/) (architecture & file formats) ·
 [Anvil repo](https://github.com/LogiSmith/Anvil) ·
 [toolchain-setup](https://github.com/LogiSmith/toolchain-setup) (the installer)
 

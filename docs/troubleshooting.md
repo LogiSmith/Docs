@@ -83,7 +83,7 @@ No — the whole flow is open-source (F4PGA: Yosys + VPR).
 
 **Which boards are supported?**
 Run `anvil boards`. Adding a board = a `boards.json` entry + its XDC; see the
-[Anvil developer docs](https://logismith.github.io/Anvil/contributing/).
+[Anvil internals](https://logismith.github.io/Anvil/contributing/).
 
 **Does it run on Windows?**
 Yes, under WSL2 — see the [WSL2 guide](installation/wsl.md).

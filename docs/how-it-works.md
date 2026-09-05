@@ -2,7 +2,7 @@
 
 A conceptual tour of what happens between your HDL and a running FPGA — no
 commands here, just the mental model. (For the code-level details, see the
-[Anvil developer docs](https://logismith.github.io/Anvil/architecture/).)
+[Anvil internals](https://logismith.github.io/Anvil/architecture/).)
 
 ## The open FPGA flow
 
@@ -82,6 +82,6 @@ The tools above are low-level and fiddly to wire together. Anvil adds a small
 
 ## Going deeper
 
-- [Anvil developer docs](https://logismith.github.io/Anvil/) — the build flow in
+- [Anvil internals](https://logismith.github.io/Anvil/) — the build flow in
   code, and the `config.json` / `module.json` / `soc.json` file formats.
 - [CLI reference](cli.md) — the commands that drive each stage above.

@@ -82,7 +82,7 @@ anvil program
 ## Where to go next
 
 - [CLI reference](cli.md) — every command and its options.
-- [Anvil developer docs](https://logismith.github.io/Anvil/) — how modules, SoCs
+- [Anvil internals](https://logismith.github.io/Anvil/) — how modules, SoCs
   and the build flow work under the hood, and the `config.json` / `module.json` /
   `soc.json` schemas.
 

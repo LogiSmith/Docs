@@ -65,4 +65,4 @@ through, e.g. `anvil update --minimal`.
 
 For the file formats these commands read (`config.json`, `module.json`,
 `soc.json`, `boards.json`), see the
-[Anvil developer docs](https://logismith.github.io/Anvil/file-formats/).
+[Anvil internals](https://logismith.github.io/Anvil/file-formats/).

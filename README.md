@@ -1,16 +1,16 @@
-# LogiSmith Docs
+# Anvil Docs
 
 [![Docs](https://img.shields.io/badge/docs-mkdocs--material-blue)](https://logismith.github.io/Docs/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE)
 
-Source for the **LogiSmith documentation site** — user-facing guides for the
-open-source FPGA toolchain: installing dependencies (Ubuntu, WSL2, Docker),
-getting started and usage.
+Source for the **Anvil documentation site** — user-facing guides for the
+open-source FPGA toolchain: installing dependencies (Ubuntu, WSL2), getting
+started and usage.
 
 👉 **Read it here: <https://logismith.github.io/Docs/>**
 
-> This is the *product / user* documentation. Component-level developer docs live
-> with each component's code — e.g. the Anvil CLI internals at
+> This is the *user* documentation for Anvil. Component-level developer docs
+> live with each component's code — e.g. the Anvil CLI internals at
 > <https://logismith.github.io/Anvil/>.
 
 ## Local development

@@ -129,5 +129,5 @@ via modules, and a CPU running C. From here, extend the SoC — add a peripheral
 another slot (GPIO, timer), or write richer firmware.
 
 - [How it works](../how-it-works.md) · [CLI reference](../cli.md)
-- [Anvil developer docs](https://logismith.github.io/Anvil/) — SoC internals and
+- [Anvil internals](https://logismith.github.io/Anvil/) — SoC internals and
   the `soc.json` build config.

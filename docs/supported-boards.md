@@ -32,5 +32,5 @@ A board is just an entry in `boards.json` plus a master XDC file:
 2. Add the master constraints file under `xdc/<board>-Master.xdc`.
 3. Verify with `anvil boards`.
 
-See the [Anvil developer docs](https://logismith.github.io/Anvil/contributing/) for
+See the [Anvil internals](https://logismith.github.io/Anvil/contributing/) for
 the exact `boards.json` fields and an example.
