@@ -3,7 +3,7 @@
 Setting up the full toolchain on native Ubuntu (bare-metal or VM). Tested on
 **Ubuntu 22.04 LTS** (x86_64).
 
-!!! tip "On Windows?"
+!!! tip "On Windows? Use the WSL2 guide instead"
     Use the [WSL2 guide](wsl.md) instead. A helper script sets up the WSL distro
     (kernel modules included) and then runs this same installer inside it, plus
     the Windows-side USB forwarding needed to program a board.
@@ -88,7 +88,7 @@ Follow these if you prefer to install step by step, or to understand what the
 automatic script does. Keep the paths as-is unless you also change them in
 `anvil.py`.
 
-### 1. Build dependencies
+### 1. Build dependencies { .step }
 
 ```bash
 sudo apt-get update && sudo apt-get upgrade -y
@@ -104,7 +104,7 @@ Simulator + waveform viewer (needed for `anvil test`):
 sudo apt install -y iverilog gtkwave
 ```
 
-### 2. Anvil CLI
+### 2. Anvil CLI { .step }
 
 ```bash
 git clone https://github.com/LogiSmith/Anvil.git ~/opt/anvil
@@ -114,7 +114,7 @@ source ~/.bashrc
 anvil --help
 ```
 
-### 3. sv2v (SystemVerilog → Verilog)
+### 3. sv2v (SystemVerilog → Verilog) { .step }
 
 Anvil converts every `.sv` source with `sv2v`. Install the release binary to
 `~/opt/sv2v/sv2v`:
@@ -128,7 +128,7 @@ chmod +x ~/opt/sv2v/sv2v
 ~/opt/sv2v/sv2v --version
 ```
 
-### 4. F4PGA (synthesis & place/route)
+### 4. F4PGA (synthesis & place/route) { .step }
 
 #### 4.1 Miniconda
 
@@ -178,7 +178,7 @@ sed -i 's/assert list_of_cells\[0\] is None, (bit, list_of_cells\[0\], cellname)
 It relaxes an overly strict assertion that fails on multi-driver nets; the tool
 continues correctly afterwards.
 
-### 5. RISC-V toolchain *(optional — SoC firmware)*
+### 5. RISC-V toolchain *(optional — SoC firmware)* { .step }
 
 Needed only for `anvil compile` (SoC projects with C/C++ firmware):
 
@@ -186,7 +186,7 @@ Needed only for `anvil compile` (SoC projects with C/C++ firmware):
 sudo apt install -y gcc-riscv64-unknown-elf
 ```
 
-### 6. openFPGALoader *(optional — programming a board)*
+### 6. openFPGALoader *(optional — programming a board)* { .step }
 
 > The apt/conda version is too old — build from source.
 

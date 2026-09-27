@@ -10,21 +10,21 @@ instantiating a module · a small sequencer (FSM) · reading serial on your PC.
 **Prerequisite:** toolchain [installed](../installation/index.md); previous
 tutorials done.
 
-!!! warning "On WSL2: attach the board before you start"
+!!! warning "WSL only — attach the board first"
     This tutorial ends by reading a serial port, and on WSL2 `/dev/ttyUSB1` only
     exists once the board's USB has been forwarded into the distro. Do it now
     rather than at the last step: [USB forwarding](../installation/usb-forwarding.md).
     It has to be repeated after every reboot and replug. On native Linux there is
     nothing to do.
 
-## 1. Start from the example
+## 1. Start from the example { .step }
 
 ```bash
 mkdir uart && cd uart
 anvil init --board Nexys-A7-100T --example uart-hello
 ```
 
-## 2. Reusing a module
+## 2. Reusing a module { .step }
 
 You don't implement UART yourself — you pull in the `uart` module. Look at what
 the project uses:
@@ -49,7 +49,7 @@ anvil addmodule uart      # adds uart + baud-rate-generator + uart-tx + uart-rx
 This is the package-manager part of Anvil: modules declare their dependencies,
 and Anvil resolves them. (More in [How it works](../how-it-works.md).)
 
-## 3. Using the module (`top.sv`)
+## 3. Using the module (`top.sv`) { .step }
 
 The UART block is *instantiated* like any sub-module — parameters in `#( … )`,
 ports wired with `.port(signal)`:
@@ -96,7 +96,7 @@ end
 This is a tiny **finite state machine**: load a character → pulse `tx_start` →
 wait for `tx_done` → repeat. `cpu_resetn` is the board's reset button (active-low).
 
-## 4. The pins
+## 4. The pins { .step }
 
 ```tcl
 set_property PACKAGE_PIN E3  [get_ports {clk}];         create_clock -period 10.0 [get_ports {clk}]
@@ -105,7 +105,7 @@ set_property PACKAGE_PIN C12 [get_ports {cpu_resetn}]   # reset button
 # (each also needs IOSTANDARD LVCMOS33)
 ```
 
-## 5. Build, program, and watch
+## 5. Build, program, and watch { .step }
 
 ```bash
 anvil build
@@ -115,7 +115,7 @@ sudo screen /dev/ttyUSB1 9600       # exit: Ctrl+A then K
 
 Press the reset button — `Hello World!` appears in the terminal. 🎉
 
-!!! note "No `/dev/ttyUSB1`? (WSL2 only)"
+!!! note "WSL only — no `/dev/ttyUSB1`?"
     The board was not attached, or the attachment was lost on a reboot or replug —
     see [USB forwarding](../installation/usb-forwarding.md). If it *is* attached and
     the device still does not appear, the FTDI driver is not loaded:

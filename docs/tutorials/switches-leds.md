@@ -10,7 +10,7 @@ the `--example` workflow.
 
 **Prerequisite:** toolchain [installed](../installation/index.md); [Blinky](blinky.md) done.
 
-## 1. Start from the example
+## 1. Start from the example { .step }
 
 This design ships as an example, so scaffold straight from it (the example also
 brings the matching pin constraints for all 32 signals):
@@ -20,7 +20,7 @@ mkdir sw-leds && cd sw-leds
 anvil init --board Nexys-A7-100T --example switches-leds
 ```
 
-## 2. The design (`top.sv`)
+## 2. The design (`top.sv`) { .step }
 
 ```systemverilog
 module top (
@@ -39,7 +39,7 @@ That's the whole design. Two things to notice:
 - **`assign`** is a *continuous assignment* — "led is always whatever sw is."
 - **`[15:0]`** is a 16-bit **bus**: 16 switches and 16 LEDs handled as one vector.
 
-## 3. The pins (`.xdc`)
+## 3. The pins (`.xdc`) { .step }
 
 The example's XDC maps each switch and LED to its physical pin, in plain syntax:
 
@@ -57,7 +57,7 @@ set_property IOSTANDARD LVCMOS33 [get_ports {led[*]}]
 Note `[get_ports {sw[*]}]` — one line sets the I/O standard for the whole bus.
 There's no `clk` / `create_clock` here, because the design has no clock.
 
-## 4. Build and program
+## 4. Build and program { .step }
 
 ```bash
 anvil build

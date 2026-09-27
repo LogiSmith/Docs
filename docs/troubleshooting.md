@@ -61,7 +61,7 @@ set_property -dict { PACKAGE_PIN H17 IOSTANDARD LVCMOS33 } [get_ports {led[0]}]
 | `screen` exits immediately / permission denied | `/dev/ttyUSB*` is root-owned | Run it with `sudo`, or add yourself to `dialout`: `sudo usermod -aG dialout $USER` |
 | Garbled UART output | baud mismatch / TX too fast | Use 9600 baud |
 
-!!! note "WSL only"
+!!! note "WSL only — forwarding and the FTDI module"
     **Applies only on WSL2 (Windows) — on native Linux you can ignore it.** The
     board's USB must be forwarded into WSL with usbipd-win, and the FTDI kernel
     module loaded. See [USB forwarding](installation/usb-forwarding.md), or the

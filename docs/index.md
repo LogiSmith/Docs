@@ -12,10 +12,11 @@ small CLI called **Anvil**.
 2. **[Getting started](getting-started.md)** — from an empty folder to a bitstream on the board
 3. **[Blinky tutorial](tutorials/blinky.md)** — your first design, explained step by step
 
-!!! note "Running on Windows (WSL2)?"
-    The docs are written for native Linux. The few WSL-only steps (forwarding the
-    board's USB) appear as call-outs marked **"WSL only"** throughout — on native
-    Linux you can skip them.
+!!! note "WSL only — what that marker means"
+    These docs are written for native Linux. Everything that is different on
+    Windows/WSL2 — almost all of it about forwarding the board's USB into the
+    distro — appears in a call-out whose title starts with **"WSL only"**. On
+    native Linux you can skip every one of them; on WSL2, read them all.
 
 ---
 

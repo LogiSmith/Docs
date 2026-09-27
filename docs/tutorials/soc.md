@@ -10,14 +10,14 @@ memory-mapped peripherals (MMIO) · hardware/software co-design.
 **Prerequisite:** toolchain [installed](../installation/index.md) (incl. the RISC-V
 toolchain — `anvil doctor`); [UART hello](uart-hello.md) done.
 
-## 1. Start from the example
+## 1. Start from the example { .step }
 
 ```bash
 mkdir soc && cd soc
 anvil init --board Nexys-A7-100T --example hello-PicoRV
 ```
 
-## 2. What's an SoC here?
+## 2. What's an SoC here? { .step }
 
 An **SoC** (System-on-Chip) is a CPU + a bus + peripherals. Adding the SoC module
 brings all of that, *and* scaffolds a `firmware/` folder for your C code:
@@ -37,7 +37,7 @@ apb_uart      u_uart           ( .PSEL(SpSEL[0]), … .uart_tx(uart_tx) );  // s
 The board's `led0` is a heartbeat blink and `led1` lights on UART activity — handy
 visual confirmation the CPU is alive and transmitting.
 
-## 3. The firmware (`firmware/src/main.cpp`)
+## 3. The firmware (`firmware/src/main.cpp`) { .step }
 
 This is the program the CPU runs — plain C++:
 
@@ -65,7 +65,7 @@ Writing a byte to address `UART_TX` *is* the act of transmitting it — the hard
 on slot 0 sees the bus write and shifts the byte out. That's MMIO: software talks
 to hardware through ordinary memory addresses.
 
-## 4. Build (firmware + hardware together)
+## 4. Build (firmware + hardware together) { .step }
 
 ```bash
 anvil build
@@ -81,7 +81,7 @@ For an SoC project, `anvil build` does **two** things:
 
 So the program ships *inside* the bitstream — no separate flashing of code.
 
-## 5. Program and watch
+## 5. Program and watch { .step }
 
 ```bash
 anvil program
@@ -91,7 +91,7 @@ sudo screen /dev/ttyUSB1 9600      # exit: Ctrl+A then K
 Press reset — the CPU boots and prints **`Hello from PicoRV32!`**. A RISC-V
 processor you synthesized is running your C code. 🎉
 
-!!! note "No `/dev/ttyUSB1`? (WSL2 only)"
+!!! note "WSL only — no `/dev/ttyUSB1`?"
     The board was not attached, or the attachment was lost on a reboot or replug —
     see [USB forwarding](../installation/usb-forwarding.md).
 

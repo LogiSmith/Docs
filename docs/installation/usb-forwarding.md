@@ -12,7 +12,7 @@ inside WSL, so something has to hand the USB device across. That something is
 What is left is the part that cannot be done once and forgotten: **attaching the
 board**, after every reboot and every replug.
 
-!!! info "Native Linux users can skip this page"
+!!! note "WSL only — the whole page"
     This is a WSL2 problem only. On Ubuntu the board is already a local USB device
     and the udev rule the installer added is all you need.
 

@@ -9,14 +9,14 @@ clock divider · mapping a signal to a physical pin (XDC).
 
 **Prerequisite:** toolchain [installed](../installation/index.md) — `anvil doctor`.
 
-## 1. Scaffold a project
+## 1. Scaffold a project { .step }
 
 ```bash
 mkdir blinky && cd blinky
 anvil init --board Nexys-A7-100T
 ```
 
-## 2. The design (`top.sv`)
+## 2. The design (`top.sv`) { .step }
 
 Replace `top.sv` with:
 
@@ -40,7 +40,7 @@ counter increments every clock tick; its top bit `count[25]` flips only every
 2²⁵ ticks (~0.34 s), so the LED toggles a few times per second. A counter used
 this way is a simple **clock divider**.
 
-## 3. Map the pins (`.xdc`)
+## 3. Map the pins (`.xdc`) { .step }
 
 Synthesis only knows the signal names `clk` and `led` — the XDC ties them to
 real pins on *this* board. Replace the project's `.xdc` with:
@@ -62,7 +62,7 @@ set_property IOSTANDARD LVCMOS33 [get_ports {led}]
     F4PGA needs plain `set_property` lines — **not** Vivado's
     `set_property -dict { … }` form. See [Troubleshooting](../troubleshooting.md#constraints-xdc).
 
-## 4. Build and program
+## 4. Build and program { .step }
 
 ```bash
 anvil build       # sources → bitstream (~20 s)
