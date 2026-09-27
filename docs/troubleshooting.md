@@ -55,7 +55,7 @@ set_property -dict { PACKAGE_PIN H17 IOSTANDARD LVCMOS33 } [get_ports {led[0]}]
 
 | Symptom | Cause | Fix |
 |---------|-------|-----|
-| `Error: no device found` | board off or USB not attached | Power the board on; on WSL attach USB with usbipd |
+| `Error: no device found` | board off or USB not attached | Power the board on; on WSL [attach the board](installation/usb-forwarding.md) |
 | `/dev/ttyUSB*` missing | FTDI driver not loaded | `sudo modprobe ftdi_sio` |
 | Serial monitor won't open the port | port held by another process | Use `sudo screen /dev/ttyUSB1 9600` (exit: `Ctrl+A` then `K`) |
 | `screen` exits immediately / permission denied | `/dev/ttyUSB*` is root-owned | Run it with `sudo`, or add yourself to `dialout`: `sudo usermod -aG dialout $USER` |
@@ -64,7 +64,8 @@ set_property -dict { PACKAGE_PIN H17 IOSTANDARD LVCMOS33 } [get_ports {led[0]}]
 !!! note "WSL only"
     **Applies only on WSL2 (Windows) — on native Linux you can ignore it.** The
     board's USB must be forwarded into WSL with usbipd-win, and the FTDI kernel
-    module loaded. See the [WSL2 install guide](installation/wsl.md).
+    module loaded. See [USB forwarding](installation/usb-forwarding.md), or the
+    [WSL2 install guide](installation/wsl.md) for the kernel modules.
 
 ## Modules
 

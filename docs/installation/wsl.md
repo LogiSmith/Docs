@@ -32,7 +32,7 @@ the distro, so there is only one command to run.
 | WSL | 2.7.13.0 or newer |
 | WSL kernel | 6.18.33.2 or newer (ships `vhci-hcd` + `ftdi_sio`) |
 | Disk | ~25 GB free |
-| usbipd-win | only to program a board — `winget install --exact dorssel.usbipd-win` |
+| usbipd-win | only to program a board — installed for you by `wsl-setup.ps1` |
 
 Virtualization (VT-x / AMD-V) must be enabled in the BIOS/UEFI.
 
@@ -262,17 +262,17 @@ are identical.
 
 Needed only for `anvil program`. On native Linux this is not required.
 
-Install it once, on the **Windows** side:
+`wsl-setup.ps1` installs `usbipd-win` for you, so nothing has to be installed by
+hand. What remains is *attaching* the board, which has to be repeated after every
+reboot and every replug — WSL2 is a virtual machine and has no USB ports of its
+own.
 
-```powershell
-winget install --exact dorssel.usbipd-win
-```
-
-Then, each time you plug the board in (Administrator PowerShell):
+The short version, from a PowerShell:
 
 ```powershell
 usbipd list                                 # find the board's BUSID
-usbipd attach --wsl --busid <BUSID>
+usbipd bind --busid <BUSID>                 # once per board, Administrator
+usbipd attach --wsl --busid <BUSID>         # every session, normal PowerShell
 ```
 
 Inside WSL, confirm it arrived:
@@ -282,9 +282,10 @@ lsusb                 # should list Future Technology Devices (0403:6010)
 ls /dev/ttyUSB*       # serial console device
 ```
 
-!!! note "Re-attach after replugging"
-    Unplugging the board (or running `wsl --shutdown`) detaches it. Run
-    `usbipd attach --wsl --busid <BUSID>` again — the kernel modules stay loaded.
+There are two easier ways to do the same thing — a VS Code button and a small GUI —
+and a list of what to check when it does not work.
+
+[**USB forwarding — all three methods →**](usb-forwarding.md)
 
 ---
 

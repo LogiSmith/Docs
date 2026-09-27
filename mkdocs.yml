@@ -59,6 +59,7 @@ nav:
       - Overview: installation/index.md
       - Ubuntu (native): installation/ubuntu.md
       - WSL2: installation/wsl.md
+      - USB forwarding (WSL2): installation/usb-forwarding.md
       - Docker: installation/docker.md
   - Learn:
       - Getting started: getting-started.md
