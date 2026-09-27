@@ -16,15 +16,23 @@ board**, after every reboot and every replug.
     This is a WSL2 problem only. On Ubuntu the board is already a local USB device
     and the udev rule the installer added is all you need.
 
-## What the board looks like
+## Find your board in the list
 
-Open a PowerShell and run:
+Every method below starts the same way: you have to know which entry in the list
+*is* the board. The reliable way to find out is to look twice.
+
+**First, with the board unplugged**, open a PowerShell and run:
 
 ```powershell
 usbipd list
 ```
 
-On the machine these instructions were written on, a Nexys A7 showed up as:
+You will see your mouse receiver, webcam, Bluetooth radio and whatever else is
+built into the laptop. Ignore all of it — that is the baseline.
+
+**Now plug the board in, switch it on, and run the same command again.** The new
+entry is your board. On the machine these instructions were written on it appeared
+as:
 
 ```
 BUSID  VID:PID    DEVICE                                            STATE
@@ -36,7 +44,10 @@ a different board — or the same board on another machine — can be listed und
 another name and another BUSID. Two things are reliable:
 
 - the VID:PID is `0403:6010` (FTDI, the USB chip on the Nexys A7)
-- it appears only while the board is plugged in and powered on
+- it is the entry that was not there a moment ago
+
+Write down the BUSID. Every method below needs it, and it can change when you use a
+different USB port.
 
 !!! warning "Nothing listed?"
     If no new entry appears when you plug the board in, Windows itself cannot see
@@ -52,7 +63,7 @@ Pick **one** of the three methods below. They all do the same thing.
 The easiest one if you already work in VS Code, because the button sits next to
 everything else you use.
 
-!!! danger "Connect VS Code to the toolchain's distro first"
+!!! warning "Connect VS Code to the toolchain's distro first"
     VS Code keeps two separate sets of extensions — one on Windows, one inside each
     WSL distro — and this one has to live **inside** the distro you installed the
     toolchain into (default name `anvil`). Installed on the Windows side, or into a
@@ -79,13 +90,18 @@ Click it and a device picker opens at the **top** of the window:
 
 ![The device picker listing attachable USB devices](../images/usbip-connect-device-picker.png)
 
-Choose the entry that matches what `usbipd list` showed you. The extension binds
-and attaches by itself, so no Administrator PowerShell is needed.
+**There is no board in that screenshot** — it was taken with nothing plugged in,
+which is why only a mouse receiver, a camera and a Bluetooth radio are listed. With
+your board connected and powered on it appears in this same list, and that is the
+entry you pick: the one matching the BUSID you noted above.
 
-!!! note "The picker lists everything"
-    Your mouse receiver, webcam and Bluetooth radio are all in that list. Attaching
-    the wrong one hands that device to Linux and takes it from Windows — briefly
-    confusing, not harmful. Attach it back, or unplug and replug it.
+The extension binds and attaches by itself, so no Administrator PowerShell is
+needed.
+
+!!! note "Picking the wrong one is recoverable"
+    Attaching your mouse receiver or webcam hands that device to Linux and takes it
+    from Windows — briefly confusing, not harmful. Attach it back, or unplug and
+    replug it.
 
 ## Method 2 — wsl-usb-manager
 

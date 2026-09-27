@@ -147,6 +147,35 @@ and inside the distro:
 anvil doctor
 ```
 
+### Step 5 — Forward the board into WSL
+
+**Only needed to program a board.** You can write, build and simulate without it.
+
+WSL2 is a virtual machine with no USB ports of its own, so a board plugged into
+your laptop is visible to Windows and invisible to Linux. `wsl-setup.ps1` already
+installed `usbipd-win`; what is left is *attaching* the board, and that has to be
+repeated after every reboot and every replug.
+
+The short version, from a PowerShell:
+
+```powershell
+usbipd list                                 # find the board's BUSID
+usbipd bind --busid <BUSID>                 # once per board, Administrator
+usbipd attach --wsl --busid <BUSID>         # every session, normal PowerShell
+```
+
+Inside WSL, confirm it arrived:
+
+```bash
+lsusb                 # should list Future Technology Devices (0403:6010)
+ls /dev/ttyUSB*       # serial console device
+```
+
+There are two easier ways to do the same thing — a button in VS Code and a small
+GUI — plus what to check when it does not work:
+
+[**USB forwarding — all three methods →**](usb-forwarding.md)
+
 ### What it checks
 
 Before creating anything, Step 1 verifies the Windows side and stops with an
@@ -256,36 +285,14 @@ printf 'vhci-hcd\nftdi_sio\n' | sudo tee /etc/modules-load.d/anvil-usbip.conf
 Follow the [Ubuntu (native) guide](ubuntu.md) inside your WSL distro — the steps
 are identical.
 
----
+### 4. Forward the board into WSL
 
-## Forward the FPGA board over USB (usbipd-win)
-
-Needed only for `anvil program`. On native Linux this is not required.
-
-`wsl-setup.ps1` installs `usbipd-win` for you, so nothing has to be installed by
-hand. What remains is *attaching* the board, which has to be repeated after every
-reboot and every replug — WSL2 is a virtual machine and has no USB ports of its
-own.
-
-The short version, from a PowerShell:
+Same as [Step 5](#step-5-forward-the-board-into-wsl) above, except that nothing
+installed `usbipd-win` for you — do that first, from a PowerShell:
 
 ```powershell
-usbipd list                                 # find the board's BUSID
-usbipd bind --busid <BUSID>                 # once per board, Administrator
-usbipd attach --wsl --busid <BUSID>         # every session, normal PowerShell
+winget install --exact dorssel.usbipd-win
 ```
-
-Inside WSL, confirm it arrived:
-
-```bash
-lsusb                 # should list Future Technology Devices (0403:6010)
-ls /dev/ttyUSB*       # serial console device
-```
-
-There are two easier ways to do the same thing — a VS Code button and a small GUI —
-and a list of what to check when it does not work.
-
-[**USB forwarding — all three methods →**](usb-forwarding.md)
 
 ---
 

@@ -91,10 +91,9 @@ sudo screen /dev/ttyUSB1 9600      # exit: Ctrl+A then K
 Press reset — the CPU boots and prints **`Hello from PicoRV32!`**. A RISC-V
 processor you synthesized is running your C code. 🎉
 
-!!! note "WSL only"
-    **Applies only on WSL2 (Windows) — on native Linux you can ignore it.** Needs
-    the board's USB forwarded + the FTDI driver for `/dev/ttyUSB1` — see the
-    [WSL2 guide](../installation/wsl.md).
+!!! note "No `/dev/ttyUSB1`? (WSL2 only)"
+    The board was not attached, or the attachment was lost on a reboot or replug —
+    see [USB forwarding](../installation/usb-forwarding.md).
 
 ## Make it print your own message
 

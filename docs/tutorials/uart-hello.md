@@ -10,6 +10,13 @@ instantiating a module · a small sequencer (FSM) · reading serial on your PC.
 **Prerequisite:** toolchain [installed](../installation/index.md); previous
 tutorials done.
 
+!!! warning "On WSL2: attach the board before you start"
+    This tutorial ends by reading a serial port, and on WSL2 `/dev/ttyUSB1` only
+    exists once the board's USB has been forwarded into the distro. Do it now
+    rather than at the last step: [USB forwarding](../installation/usb-forwarding.md).
+    It has to be repeated after every reboot and replug. On native Linux there is
+    nothing to do.
+
 ## 1. Start from the example
 
 ```bash
@@ -108,10 +115,10 @@ sudo screen /dev/ttyUSB1 9600       # exit: Ctrl+A then K
 
 Press the reset button — `Hello World!` appears in the terminal. 🎉
 
-!!! note "WSL only"
-    **This applies only on WSL2 (Windows) — on native Linux you can ignore it.**
-    The board's USB must be forwarded into WSL and the FTDI driver loaded for
-    `/dev/ttyUSB1` to appear — see the [WSL2 guide](../installation/wsl.md) and
+!!! note "No `/dev/ttyUSB1`? (WSL2 only)"
+    The board was not attached, or the attachment was lost on a reboot or replug —
+    see [USB forwarding](../installation/usb-forwarding.md). If it *is* attached and
+    the device still does not appear, the FTDI driver is not loaded:
     [Troubleshooting](../troubleshooting.md#programming-serial).
 
 ## What you learned
