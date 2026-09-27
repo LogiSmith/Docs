@@ -7,6 +7,13 @@ already [installed](installation/index.md) — check with:
 anvil doctor
 ```
 
+!!! warning "WSL only — attach the board first"
+    On WSL2 the board is visible to Windows and invisible to Linux until you
+    forward its USB into the distro, so `anvil program` below will not find it.
+    Do it before you start, and again after every reboot or replug:
+    [USB forwarding](installation/usb-forwarding.md). On native Linux there is
+    nothing to do.
+
 ## Option A — start from an example (recommended first)
 
 The fastest way to see the whole flow work:
