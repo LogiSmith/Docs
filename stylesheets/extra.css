@@ -1,0 +1,71 @@
+/* One colour system for the whole site.
+
+   Level carries colour, so the shape of a page is readable without reading it:
+
+     h2      a section            indigo, with a rule under it
+     h3      a subsection         teal
+     .step   something you do     violet, with a bar down the left — the loudest
+     lists   markers              indigo, so a list reads as a list
+
+   The values are explicit rather than derived from the theme palette, because
+   teal and violet are not in it. Red and green are deliberately absent: the docs
+   and the installer already spend them on errors and on [ok]. Violet is the only
+   family left that carries no prior meaning here.
+
+   Every pair was measured against its own background — nothing is under 5.4:1 —
+   and the slate variants exist because these colours straight onto a dark
+   background measure about 2.4:1. Hues are 58, 51 and 109 degrees apart, which
+   is enough to tell three headings apart at a glance. */
+
+:root {
+  --doc-h2:   #4051b5;   /* 6.86:1 on white */
+  --doc-h3:   #00695c;   /* 6.61:1 */
+  --doc-step: #7b1fa2;   /* 8.20:1 */
+  --doc-mark: #4051b5;
+}
+
+[data-md-color-scheme="slate"] {
+  --doc-h2:   #969fd6;   /* 6.31:1 on slate */
+  --doc-h3:   #73aca5;   /* 6.26:1 */
+  --doc-step: #b684cc;   /* 5.49:1 */
+  --doc-mark: #969fd6;
+}
+
+.md-typeset h2 {
+  color: var(--doc-h2);
+  font-weight: 600;
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+  padding-bottom: 0.3rem;
+  margin-top: 2.2em;
+}
+
+.md-typeset h3 {
+  color: var(--doc-h3);
+  font-weight: 600;
+}
+
+/* Anything the reader works through in order: Step N, Option A, Method 1, 4.1.
+   They land at h2, h3 and h4 across the site, so all three are styled and only
+   the size differs. */
+.md-typeset h2.step,
+.md-typeset h3.step,
+.md-typeset h4.step {
+  color: var(--doc-step);
+  font-weight: 700;
+  border-bottom: none;
+  border-left: 0.3rem solid var(--doc-step);
+  padding-bottom: 0;
+  padding-left: 0.75rem;
+  margin-top: 2.5em;
+}
+
+.md-typeset h3.step {
+  font-size: 1.45em;
+}
+
+/* Only the marker is coloured; the text stays at reading contrast. */
+.md-typeset ul li::marker,
+.md-typeset ol li::marker {
+  color: var(--doc-mark);
+  font-weight: 700;
+}

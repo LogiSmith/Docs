@@ -1,0 +1,10 @@
+# Docs toolchain — install with: pip install -r docs/requirements.txt
+#
+# Pinned on purpose. CI installs this on every push and deploys the result, so an
+# unpinned version means a release somewhere else can change the published site —
+# or break it — on a commit that only touched prose. Raise it deliberately, and
+# look at the site afterwards.
+#
+# This also bounds MkDocs: mkdocs-material 9.7.7 requires mkdocs<2,>=1.6, so the
+# announced MkDocs 2.0 cannot be pulled in behind it.
+mkdocs-material==9.7.7
