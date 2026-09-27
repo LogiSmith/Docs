@@ -165,6 +165,8 @@ usbipd unbind --busid 2-4             # undo the registration (Administrator)
 
 | Symptom | Cause and fix |
 |---------|---------------|
+| `usbipd` is not recognised as a command | `usbipd-win` was never installed — step 2d of the [WSL2 guide](wsl.md#step-5-forward-the-board-into-wsl) skips it without `winget` or without an Administrator PowerShell. Install it: `winget install --exact dorssel.usbipd-win`. |
+| `usbipd attach` says the device is not shared | `bind` has not been run for it. That step is once per board and needs an Administrator PowerShell — the VS Code extension and the GUI do it for you. |
 | `usbipd list` does not show the board | Windows cannot see it. Cable (some are power-only), power switch, another port. |
 | Attach succeeds, `lsusb` shows nothing | Kernel modules missing. Re-run `wsl-setup.ps1` — step 6 checks `vhci-hcd` and `ftdi_sio`. `wsl --shutdown` then start again fixes the common case of WSL still running an older kernel than the one installed. |
 | `usbipd bind` says access denied | Not an Administrator PowerShell. `bind` needs one; `attach` does not. |

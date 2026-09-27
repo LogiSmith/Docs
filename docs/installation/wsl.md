@@ -371,6 +371,84 @@ Click an entry to expand it.
     source ~/.bashrc        # or just open a new shell
     ```
 
+??? warning "`[warn] not an ADMINISTRATOR PowerShell`"
+
+    Reported by step 1b, and again by step 2d if it stops the install. Everything
+    except `usbipd-win` still works — you get a full toolchain that builds and
+    simulates, just no way to reach the board yet.
+
+    `usbipd-win` ships a driver, and Windows will not install a driver from an
+    ordinary session. Either re-run the script from an **Administrator**
+    PowerShell, or install just that one piece later:
+
+    ```powershell
+    winget install --exact dorssel.usbipd-win
+    ```
+
+    Nothing is lost by carrying on and doing it afterwards.
+
+??? warning "`[warn] winget not found`"
+
+    `winget` comes with **App Installer**, which ships with Windows 11 and recent
+    Windows 10 — it is usually missing only on LTSC/Server builds, or on a freshly
+    imaged machine where Store apps have not been provisioned yet.
+
+    Install App Installer from the Microsoft Store, then re-run the script. Or skip
+    `winget` entirely and take the installer straight from the project:
+    <https://github.com/dorssel/usbipd-win/releases>
+
+    The rest of the setup is unaffected — this only decides whether the board can
+    be attached.
+
+??? failure "`[warn] winget did not install usbipd-win (exit …)`"
+
+    The command ran and came back unhappy. The usual causes, in order:
+
+    - **no network**, or a proxy that blocks the Store CDN
+    - **the package is already installed** but `usbipd.exe` is not on this
+      session's PATH — open a new PowerShell and run `usbipd list`; if it answers,
+      nothing is wrong
+    - **the source needs accepting** — run `winget install --exact dorssel.usbipd-win`
+      by hand once and read what it says
+
+    This never stops the install; the toolchain is fine either way.
+
+??? warning "`[warn] only N GB free`"
+
+    The toolchain needs roughly **25 GB**: the Conda environment and the F4PGA
+    architecture definitions are most of it, and Verilator is built from source.
+
+    The script warns and continues, because it cannot know what else you are about
+    to delete. If it does run out, the failure appears somewhere in the middle of
+    the Linux installer — usually as a `download failed` or a failed extraction —
+    and is safe to fix and re-run: nothing is deleted on a retry.
+
+??? failure "`[ERROR] install.sh failed inside <distro>`"
+
+    WSL is set up correctly and the Linux-side installer stopped. The distro is
+    kept, so nothing has to be redone from scratch.
+
+    The Linux installer prints which step it was on. Enter the distro and run it
+    again — it is idempotent and skips what is already there:
+
+    ```powershell
+    wsl -d anvil
+    ```
+
+    ```bash
+    curl -fsSL https://raw.githubusercontent.com/LogiSmith/toolchain-setup/main/install.sh | bash
+    ```
+
+??? failure "The script stops at the command channel self-test (step 4b)"
+
+    A failsafe, not a bug in your machine. Everything the script does inside the
+    distro relies on `wsl --exec` passing a command through unchanged; if a new WSL
+    release changes that, the script stops **before** touching anything rather than
+    half-running commands.
+
+    The message prints the `winget` commands that pin WSL back to the last verified
+    release. Do that, then run Step 1 again.
+
 ??? question "Can I start over?"
 
     Yes — the distro is disposable and nothing outside it is touched. This

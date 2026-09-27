@@ -224,3 +224,88 @@ anvil build
 ```
 
 A bitstream under `build/<target>/top.bit` means the toolchain works.
+
+---
+
+## Troubleshooting
+
+Click an entry to expand it. Anything not here is in the general
+[Troubleshooting & FAQ](../troubleshooting.md).
+
+??? failure "`[ERROR] Run as a normal user (not root); sudo is used where needed`"
+
+    The installer refuses to run as root on purpose: everything it puts in your
+    home directory — Miniconda, the F4PGA environment, the Anvil clone — would end
+    up owned by root and unusable from your own account.
+
+    Run it as yourself, without `sudo`. It asks for the password when it needs it.
+
+??? failure "`[ERROR] Miniconda at ~/miniconda3 looks incomplete (interrupted install)`"
+
+    A previous run was stopped part-way. The installer will not write into a
+    half-finished install, because the result is worse than either state.
+
+    ```bash
+    rm -rf ~/miniconda3 && anvil update
+    ```
+
+    The same applies to the Conda environment:
+
+    ```bash
+    conda env remove -n xc7 && anvil update
+    ```
+
+??? failure "`[ERROR] download failed (network?)` or `checksum mismatch`"
+
+    The F4PGA architecture definitions and the toolchains are a few hundred MB, and
+    a dropped connection leaves a truncated file. A checksum mismatch is the
+    installer catching exactly that — it is not a sign that anything was tampered
+    with.
+
+    Re-running is safe and resumes: finished steps are skipped.
+
+    ```bash
+    anvil update
+    ```
+
+    If it keeps failing on the same URL, you are probably behind a proxy or a
+    captive portal that answers with an HTML page instead of the file.
+
+??? failure "Out of disk space part-way through"
+
+    The toolchain needs roughly **25 GB**. Most of it is the Conda environment and
+    the F4PGA architecture definitions, and Verilator is built from source.
+
+    Free some space and re-run — nothing is deleted on a retry, so it picks up
+    where it stopped.
+
+??? failure "`anvil: command not found` after installing"
+
+    The `anvil` alias is added to `~/.bashrc`, which only takes effect in a new
+    shell.
+
+    ```bash
+    source ~/.bashrc
+    ```
+
+    If that does not help, the clone is at `~/.anvil` and can be called directly:
+    `python3 ~/.anvil/anvil.py doctor`.
+
+??? failure "`anvil doctor` reports `FAIL` for F4PGA / Conda"
+
+    Conda is installed but the `xc7` environment is missing or incomplete —
+    usually an interrupted step 4.2.
+
+    ```bash
+    conda env remove -n xc7 && anvil update
+    ```
+
+??? question "Can I re-run the installer safely?"
+
+    Yes. Every step checks whether its work is already done and skips it, so a
+    re-run costs minutes rather than an hour. It is the intended way to recover
+    from any failure above:
+
+    ```bash
+    anvil update
+    ```
