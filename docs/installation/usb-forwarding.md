@@ -161,15 +161,83 @@ usbipd unbind --busid 2-4             # undo the registration (Administrator)
 
 ---
 
-## When it does not work
+## Troubleshooting
 
-| Symptom | Cause and fix |
-|---------|---------------|
-| `usbipd` is not recognised as a command | `usbipd-win` was never installed — step 2d of the [WSL2 guide](wsl.md#step-5-forward-the-board-into-wsl) skips it without `winget` or without an Administrator PowerShell. Install it: `winget install --exact dorssel.usbipd-win`. |
-| `usbipd attach` says the device is not shared | `bind` has not been run for it. That step is once per board and needs an Administrator PowerShell — the VS Code extension and the GUI do it for you. |
-| `usbipd list` does not show the board | Windows cannot see it. Cable (some are power-only), power switch, another port. |
-| Attach succeeds, `lsusb` shows nothing | Kernel modules missing. Re-run `wsl-setup.ps1` — step 6 checks `vhci-hcd` and `ftdi_sio`. `wsl --shutdown` then start again fixes the common case of WSL still running an older kernel than the one installed. |
-| `usbipd bind` says access denied | Not an Administrator PowerShell. `bind` needs one; `attach` does not. |
-| The VS Code **Attach** button is missing | The extension went onto Windows instead of into the distro. Check the bottom-left says `WSL: <your distro>`, then install it again from that window — the marketplace entry offers *Install in WSL* when you are connected. |
-| Attached, but WSL still cannot see it | You may have more than one distro. `wsl --list` shows them all; the board goes to whichever one attached it. |
-| It worked yesterday, not today | The attachment does not survive a reboot. Run `attach` again — expected, not a fault. |
+Click an entry to expand it. Anything not here is in the general
+[Troubleshooting & FAQ](../troubleshooting.md).
+
+??? failure "`usbipd` is not recognised as a command"
+
+    `usbipd-win` was never installed. Step 2d of the
+    [WSL2 guide](wsl.md#step-5-forward-the-board-into-wsl) skips it when `winget`
+    is absent or the script was not run from an Administrator PowerShell — it
+    warns and carries on rather than failing the whole setup.
+
+    From an **Administrator** PowerShell:
+
+    ```powershell
+    winget install --exact dorssel.usbipd-win
+    ```
+
+??? failure "`usbipd list` does not show the board"
+
+    Windows itself cannot see it, so nothing on this page will help until that is
+    fixed. In order of likelihood: the cable (many USB cables carry power only),
+    the board's power switch, then another port.
+
+    Compare the list with the board unplugged and plugged in — the entry that
+    appears is the one you want.
+
+??? failure "`usbipd bind` says access denied"
+
+    You are not in an Administrator PowerShell. `bind` registers the device
+    system-wide and needs one; `attach` does not.
+
+    The VS Code extension and wsl-usb-manager both handle this for you, which is
+    why neither asks for elevation.
+
+??? failure "`usbipd attach` says the device is not shared"
+
+    `bind` has not been run for that BUSID. It is a one-time step per board and it
+    survives reboots:
+
+    ```powershell
+    usbipd bind --busid 2-4        # Administrator, once
+    usbipd attach --wsl --busid 2-4
+    ```
+
+??? failure "Attach succeeds, but `lsusb` shows nothing"
+
+    The kernel modules are missing inside the distro. Re-run `wsl-setup.ps1` —
+    its step 6 checks `vhci-hcd` and `ftdi_sio` and says what to do.
+
+    The common case is WSL still running an older kernel than the one it has
+    installed; a running VM keeps the kernel it booted with until every distro
+    stops:
+
+    ```powershell
+    wsl --shutdown
+    ```
+
+??? failure "The VS Code **Attach** button is missing"
+
+    The extension was installed on the Windows side instead of inside the distro.
+    VS Code keeps the two sets separately.
+
+    Check the bottom-left corner reads `WSL: <your distro>`, then install it again
+    from that window — with the window connected, the marketplace entry offers
+    *Install in WSL*.
+
+??? failure "Attached, but WSL still cannot see it"
+
+    You may have more than one distro. `wsl --list` shows them all, and the board
+    goes to whichever one attached it — which is not necessarily the one holding
+    the toolchain.
+
+??? question "It worked yesterday and not today"
+
+    Expected, not a fault. The attachment does not survive a reboot, and unplugging
+    the board ends it too. Run the `attach` step again.
+
+    To avoid repeating it, `--auto-attach` re-attaches on replug for as long as
+    that PowerShell window stays open.
