@@ -1,0 +1,17 @@
+/* Install-guide step headings.
+   Ordinary h3s disappear while scrolling a long page; these have to be findable
+   at a glance, because a reader who loses their place repeats a step. */
+.md-typeset h3.step {
+  font-size: 1.45em;
+  font-weight: 700;
+  color: var(--md-primary-fg-color);
+  border-left: 0.3rem solid var(--md-primary-fg-color);
+  padding-left: 0.75rem;
+  margin-top: 2.5em;
+}
+
+/* Indigo on slate is too dark to read; Material ships a lighter tone for this. */
+[data-md-color-scheme="slate"] .md-typeset h3.step {
+  color: var(--md-primary-fg-color--light);
+  border-left-color: var(--md-primary-fg-color--light);
+}

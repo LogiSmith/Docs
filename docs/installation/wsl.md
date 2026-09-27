@@ -42,7 +42,7 @@ Virtualization (VT-x / AMD-V) must be enabled in the BIOS/UEFI.
 
 Four steps. Run them in order from a **normal (non-Administrator)** PowerShell.
 
-### Step 1 — Run the installer
+### Step 1 — Run the installer { .step }
 
 ```powershell
 irm https://raw.githubusercontent.com/LogiSmith/toolchain-setup/main/wsl-setup.ps1 -OutFile "$env:TEMP\wsl-setup.ps1"; powershell -ExecutionPolicy Bypass -File "$env:TEMP\wsl-setup.ps1"
@@ -66,7 +66,7 @@ hundred MB, so give it a minute.
     [GitHub](https://github.com/LogiSmith/toolchain-setup) by hand and run
     `powershell -ExecutionPolicy Bypass -File .\wsl-setup.ps1`.
 
-### Step 2 — Choose a username and password
+### Step 2 — Choose a username and password { .step }
 
 WSL asks for these itself, and waits for you:
 
@@ -90,7 +90,7 @@ while you type it, which is normal.
 Once it says `password updated successfully`, the script carries on by itself —
 there is no window to close and nothing to type.
 
-### Step 3 — Enter that password again when `sudo` asks
+### Step 3 — Enter that password again when `sudo` asks { .step }
 
 The toolchain install starts automatically after a five-second countdown:
 
@@ -111,7 +111,7 @@ created** — and may ask again if the install runs long:
     never read your password, never write it to a file, and never send it
     anywhere. Nothing is kept beyond the normal `sudo` timeout inside the distro.
 
-### Step 4 — Wait for the finish message
+### Step 4 — Wait for the finish message { .step }
 
 This part takes **20–40 minutes** (Conda environment, F4PGA architecture
 definitions, Verilator build). You are done when you see both of these:
@@ -147,7 +147,7 @@ and inside the distro:
 anvil doctor
 ```
 
-### Step 5 — Forward the board into WSL
+### Step 5 — Forward the board into WSL { .step }
 
 **Only needed to program a board.** You can write, build and simulate without it.
 
@@ -242,7 +242,7 @@ The rest of this section is what that script does, step by step, if you prefer t
 do it yourself.
 
 
-### 1. WSL2 + Ubuntu
+### 1. WSL2 + Ubuntu { .step }
 
 From an Administrator PowerShell:
 
@@ -260,7 +260,7 @@ wsl --list --verbose
 wsl --version
 ```
 
-### 2. Check the kernel modules
+### 2. Check the kernel modules { .step }
 
 Inside the distro:
 
@@ -280,12 +280,12 @@ To load them on every boot:
 printf 'vhci-hcd\nftdi_sio\n' | sudo tee /etc/modules-load.d/anvil-usbip.conf
 ```
 
-### 3. Install the toolchain
+### 3. Install the toolchain { .step }
 
 Follow the [Ubuntu (native) guide](ubuntu.md) inside your WSL distro — the steps
 are identical.
 
-### 4. Forward the board into WSL
+### 4. Forward the board into WSL { .step }
 
 Same as [Step 5](#step-5-forward-the-board-into-wsl) above, except that nothing
 installed `usbipd-win` for you — do that first, from a PowerShell:
