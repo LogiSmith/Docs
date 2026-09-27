@@ -39,10 +39,12 @@
   font-weight: 600;
 }
 
-/* Numbered steps, in the install guides and the tutorials alike. Tutorials number
-   at h2 and the install guides at h3, so both are styled; only the size differs. */
+/* Anything the reader works through in order: Step N, Option A, Method 1, 4.1.
+   They land at h2, h3 and h4 across the site, so all three are styled and only
+   the size differs. */
 .md-typeset h2.step,
-.md-typeset h3.step {
+.md-typeset h3.step,
+.md-typeset h4.step {
   color: var(--doc-step);
   font-weight: 700;
   border-bottom: none;

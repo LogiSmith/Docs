@@ -14,7 +14,7 @@ anvil doctor
     [USB forwarding](installation/usb-forwarding.md). On native Linux there is
     nothing to do.
 
-## Option A — start from an example (recommended first)
+## Option A — start from an example (recommended first) { .step }
 
 The fastest way to see the whole flow work:
 
@@ -28,7 +28,7 @@ anvil program                                 # flash the board
 
 That's the full loop: scaffold → build → program.
 
-## Option B — start a project from scratch
+## Option B — start a project from scratch { .step }
 
 ```bash
 mkdir blinky && cd blinky

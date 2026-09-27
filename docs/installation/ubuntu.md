@@ -130,7 +130,7 @@ chmod +x ~/opt/sv2v/sv2v
 
 ### 4. F4PGA (synthesis & place/route) { .step }
 
-#### 4.1 Miniconda
+#### 4.1 Miniconda { .step }
 
 ```bash
 wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /tmp/miniconda.sh
@@ -139,7 +139,7 @@ source ~/miniconda3/etc/profile.d/conda.sh
 echo "source ~/miniconda3/etc/profile.d/conda.sh" >> ~/.bashrc
 ```
 
-#### 4.2 Conda environment
+#### 4.2 Conda environment { .step }
 
 ```bash
 git clone https://github.com/chipsalliance/f4pga-examples ~/f4pga-examples
@@ -150,7 +150,7 @@ conda activate xc7
 
 > If `environment.yml` is not found, try `conda env create -f xc7/environment.yml`.
 
-#### 4.3 Architecture definitions (Artix-7)
+#### 4.3 Architecture definitions (Artix-7) { .step }
 
 ```bash
 export F4PGA_INSTALL_DIR=~/opt/f4pga
@@ -165,7 +165,7 @@ wget -qO- https://storage.googleapis.com/symbiflow-arch-defs/artifacts/prod/foss
 wget -qO- https://storage.googleapis.com/symbiflow-arch-defs/artifacts/prod/foss-fpga-tools/symbiflow-arch-defs/continuous/install/${F4PGA_TIMESTAMP}/symbiflow-arch-defs-xc7a100t_test-${F4PGA_HASH}.tar.xz | tar -xJC $F4PGA_INSTALL_DIR/${FPGA_FAM}
 ```
 
-#### 4.4 Carry-chain patch
+#### 4.4 Carry-chain patch { .step }
 
 Complex designs (e.g. a PicoRV32 SoC) hit a known assertion bug in F4PGA's
 carry-chain fixer. Apply this one-time patch:

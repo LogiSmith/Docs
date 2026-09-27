@@ -58,7 +58,7 @@ Pick **one** of the three methods below. They all do the same thing.
 
 ---
 
-## Method 1 — VS Code extension
+## Method 1 — VS Code extension { .step }
 
 The easiest one if you already work in VS Code, because the button sits next to
 everything else you use.
@@ -103,7 +103,7 @@ needed.
     from Windows — briefly confusing, not harmful. Attach it back, or unplug and
     replug it.
 
-## Method 2 — wsl-usb-manager
+## Method 2 — wsl-usb-manager { .step }
 
 A small Windows GUI that does the same job outside VS Code, with a device list you
 can leave open: <https://github.com/nickbeth/wsl-usb-manager>
@@ -111,7 +111,7 @@ can leave open: <https://github.com/nickbeth/wsl-usb-manager>
 Follow the install and usage instructions in that project's README. It is not ours
 and we do not pin a version of it.
 
-## Method 3 — command line
+## Method 3 — command line { .step }
 
 Worth knowing even if you use a GUI: it is what they call underneath, and it is the
 only method that works over SSH or from a script.
