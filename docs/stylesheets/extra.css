@@ -1,13 +1,31 @@
-/* Numbered step headings, in the install guides and the tutorials alike.
-   Ordinary headings disappear while scrolling a long page; these have to be
-   findable at a glance, because a reader who loses their place repeats a step.
-   Tutorials number steps at h2 and the install guides at h3, so both are styled
-   and only the size differs — the colour and bar are what make them scannable. */
+/* One heading scheme for the whole site.
+   Three levels, quietest first, so the shape of a page is visible while scrolling:
+     h2      a section          colour + a rule under it
+     h3      a subsection       colour, no rule
+     .step   something you do   colour + a bar down the left, the loudest thing
+   Everything uses the theme's own primary colour, so a palette change carries. */
+
+.md-typeset h2 {
+  color: var(--md-primary-fg-color);
+  font-weight: 600;
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+  padding-bottom: 0.3rem;
+  margin-top: 2.2em;
+}
+
+.md-typeset h3 {
+  color: var(--md-primary-fg-color);
+  font-weight: 600;
+}
+
+/* Numbered steps, in the install guides and the tutorials alike. Tutorials number
+   at h2 and the install guides at h3, so both are styled; only the size differs. */
 .md-typeset h2.step,
 .md-typeset h3.step {
   font-weight: 700;
-  color: var(--md-primary-fg-color);
+  border-bottom: none;
   border-left: 0.3rem solid var(--md-primary-fg-color);
+  padding-bottom: 0;
   padding-left: 0.75rem;
   margin-top: 2.5em;
 }
@@ -16,9 +34,18 @@
   font-size: 1.45em;
 }
 
-/* Indigo on slate is too dark to read; Material ships a lighter tone for this. */
+/* The primary colour straight onto a dark background measures 2.35:1 — unreadable.
+   Lightening it against white keeps whatever palette the theme is set to; the flat
+   value above it is the fallback for browsers without color-mix. Measured on the
+   slate background: 2.35:1 unlightened, 6.31:1 like this. */
+[data-md-color-scheme="slate"] .md-typeset h2,
+[data-md-color-scheme="slate"] .md-typeset h3 {
+  color: #8c9eff;
+  color: color-mix(in srgb, var(--md-primary-fg-color) 55%, white);
+}
+
 [data-md-color-scheme="slate"] .md-typeset h2.step,
 [data-md-color-scheme="slate"] .md-typeset h3.step {
-  color: var(--md-primary-fg-color--light);
-  border-left-color: var(--md-primary-fg-color--light);
+  border-left-color: #8c9eff;
+  border-left-color: color-mix(in srgb, var(--md-primary-fg-color) 55%, white);
 }
